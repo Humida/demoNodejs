@@ -1,0 +1,7 @@
+@import 'variable';
+.test {
+    background-color: white;
+    color: $red-color;
+    font-size: 10px;
+    cursor: pointer;
+}
