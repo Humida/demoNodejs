@@ -1,0 +1,46 @@
+<div class="container-table mt-4">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Index</th>
+      <th scope="col">Tilte</th>
+      <th scope="col">ImageAddress</th>
+      <th scope="col">Description</th>
+      <th scope="col">Tùy Chọn</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each courses}}
+    <tr>
+      <th scope="row">{{@index}}</th>
+      <td>{{this.title}}</td>
+      <td>Private</td>
+      <td>{{this.des}}</td>
+      <td>
+          <a href="#"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Xóa</button></a>
+          <a href="/courses/update/{{this._id}}"><button type="button" class="btn btn-primary">Chỉnh sửa</button></a>
+      </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Xóa khóa học</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Bạn chắc chắn muốn xóa khóa học này !!!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
+        <button type="button" class="btn btn-danger">Xóa</button>
+      </div>
+    </div>
+  </div>
+</div>

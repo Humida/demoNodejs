@@ -1,0 +1,1 @@
+mongoose mc nh khi n connect  t ra modle mà modle n t ra s c t to s phia sau vid d s là as ok

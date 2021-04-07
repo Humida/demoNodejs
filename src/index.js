@@ -3,40 +3,29 @@ const morgan = require('morgan');
 const path = require('path');
 const hbs = require('express-handlebars');
 const app = express();
-const db = require('./config/db/index');
-
-const user_router = require('./routes/user.router');
-
-// connet to db
+const db = require('./config/data/db');
+const coursesRouter = require('./routes/courses.router');
+const methodOverride = require('method-override')
+    // app use method override
+app.use(methodOverride('_method'));
+// body parser
+// connet to mongoDB
 db.connect();
-app.use(express.static(path.join(__dirname, 'public')));
-// logger
+// show loggor
 app.use(morgan('combined'));
-
+// get data from middleware
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// set view with handlerbars 
 app.engine('hbs', hbs({ extname: '.hbs' }));
-
 app.set('view engine', 'hbs');
-
 app.set('views', path.join(__dirname, 'resource/views'));
-
-const port = 4000;
-
+// use  coursesRouter for end point courses
+app.use('/courses', coursesRouter);
+//  home
 app.get('/', (req, res) => {
     res.render('home');
 })
-
-app.get('/news', (req, res) => {
-    res.render('search');
-    console.log(req.query.q);
-})
-
-app.get('/search', (req, res) => {
-    res.render('search');
-})
-
-
-// router
-
-app.use('/user', user_router);
-
+const port = 4000;
 app.listen(port, () => console.log(`Example app listen at http://localhost:${port}`));

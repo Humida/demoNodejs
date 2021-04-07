@@ -1,0 +1,20 @@
+<h5>Chỉnh Sửa Khóa Học </h5>
+<div class="container-form mt-4">
+{{#each courses}}
+<form action="../store/{{this._id}}?_method=PUT" method="POST">
+    <div class="mb-3">
+    <label class="form-label">Title</label>
+
+    <input type="text" class="form-control" value="{{this.title}}" name="title">
+    </div>
+     <label class="form-label">imageAddress</label>
+    <input type="text" class="form-control" value="{{this.imageAddress}}" name="imageAddress">
+    </div>
+    <div class="mb-3">
+    <label class="form-label">description</label>
+    <input type="text" class="form-control" value="{{this.des}}" name="description">
+    </div>
+    <input type="submit" value="Sửa Khóa Học">
+{{/each}}
+</form>
+</div>
