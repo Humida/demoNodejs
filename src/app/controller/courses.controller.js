@@ -47,5 +47,15 @@ module.exports = {
                 throw error(next);
             }
         })
+    },
+    delete: function(req, res, next) {
+        courses.findOneAndDelete({ _id: req.params.id }, function(err) {
+            if (!err) {
+                res.redirect('/courses/me');
+            } else {
+                throw errors(err);
+            }
+        });
     }
+
 };

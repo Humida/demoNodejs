@@ -27,5 +27,5 @@ app.use('/courses', coursesRouter);
 app.get('/', (req, res) => {
     res.render('home');
 })
-const port = 4000;
+const port = 3000;
 app.listen(port, () => console.log(`Example app listen at http://localhost:${port}`));

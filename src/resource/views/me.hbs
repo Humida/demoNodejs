@@ -21,6 +21,7 @@
           <a href="/courses/update/{{this._id}}"><button type="button" class="btn btn-primary">Chỉnh sửa</button></a>
       </td>
     </tr>
+    <form action="/courses/delete/{{this._id}}?_method=DELETE" id="form-submit" method="POST"></form>
     {{/each}}
   </tbody>
 </table>
@@ -39,8 +40,17 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Thoát</button>
-        <button type="button" class="btn btn-danger">Xóa</button>
+        <button type="button" class="btn btn-danger" id="btn-delete">Xóa</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<script>
+  var formVi=document.getElementById("form-submit");
+  var btnDelete=document.getElementById('btn-delete');
+  btnDelete.addEventListener('click',function(){
+    formVi.submit();
+  })
+</script>
