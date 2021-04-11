@@ -23,12 +23,28 @@ module.exports = {
         res.render('addcourses');
     },
     me: function(req, res, next) {
-        courses.find({})
-            .then(courses => {
-                courses = courses.map(course => course.toObject());
-                res.render('me', { courses });
-            })
-            .catch(next);
+
+        (async() => {
+            try {
+                var countDocumentDelet = await courses.countDocumentsDeleted();
+                var course = await courses.find({});
+                coursesA = course.map((course) => course.toObject());
+                res.render('me', {
+                    countDocumentDelet,
+                    courses: coursesA
+                });
+
+            } catch (error) {
+                throw Error(error);
+            }
+
+        })();
+        // courses.find({})
+        //     .then(courses => {
+        //         courses = courses.map(course => course.toObject());
+        //         res.render('me', { courses });
+        //     })
+        //     .catch(next);
     },
     update: function(req, res, next) {
         courses.find({ _id: req.params.id })
@@ -49,13 +65,31 @@ module.exports = {
         })
     },
     delete: function(req, res, next) {
-        courses.findOneAndDelete({ _id: req.params.id }, function(err) {
-            if (!err) {
-                res.redirect('/courses/me');
-            } else {
-                throw errors(err);
-            }
-        });
+        courses.delete({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    },
+    trash: function(req, res, next) {
+        courses.findDeleted()
+            .then(courses => {
+                courses = courses.map(course => course.toObject());
+                res.render('trash', { courses })
+            }).catch(next)
+    },
+    restore: function(req, res, next) {
+        var id = req.params.id;
+        courses.restore({ _id: id })
+            .then(() => {
+                res.redirect('/courses/trash');
+            })
+            .catch(next);
+    },
+    deleteReal: function(req, res, next) {
+        var id = req.body.id;
+        courses.deleteOne({ _id: id })
+            .then(() => {
+                res.redirect('back');
+            })
+            .catch(next);
     }
-
 };

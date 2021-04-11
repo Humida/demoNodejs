@@ -1,6 +1,4 @@
-<h4><a href="/courses/trash">Vào thùng rác ({{countDocumentDelet}})</a>
-<div class="ml-4">Lua chon</div>
-</h4>
+<h4><a href="/courses/me">Khóa học của tôi</a></h4>
 <div class="container-table mt-4">
     <table class="table">
   <thead>
@@ -20,16 +18,16 @@
       <td>Private</td>
       <td>{{this.des}}</td>
       <td>
-          <a href="#"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Xóa</button></a>
-          <a href="/courses/update/{{this._id}}"><button type="button" class="btn btn-primary">Chỉnh sửa</button></a>
+          <a href="#"><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="delete-btn">Xóa vĩnh viễn</button></a> 
+          <a href="#"><button type="button" class="btn btn-primary" id="restore-btn">Khôi Phục</button></a>
       </td>
     </tr>
-    <form action="/courses/delete/{{this._id}}?_method=DELETE" id="form-submit" method="POST"></form>
+    <form action="/courses/restore/{{this._id}}" id="form-submit" method="GET">
+      <input value="{{this._id}}" name="id" style="display:none">
+    </form>
     {{else}}
-    <tr>
-      <td colspan="5">
-        Không có khóa học nào <a href="/courses/trash">Vào Thùng Rác</a>
-      </td>
+    <tr >
+      <td colspan="5">Thùng rác trống <a href="/courses/me">Trở về khóa học của bạn</a></td>
     </tr>
     {{/each}}
   </tbody>
@@ -55,11 +53,18 @@
   </div>
 </div>
 
-
 <script>
-  var formVi=document.getElementById("form-submit");
-  var btnDelete=document.getElementById('btn-delete');
-  btnDelete.addEventListener('click',function(){
-    formVi.submit();
+  var deleteBtn=document.getElementById('btn-delete');
+  var restoreBtn=document.getElementById('restore-btn');
+  var form=document.getElementById('form-submit');
+  restoreBtn.addEventListener('click',function(){
+    console.log(form);
+    form.submit();
+  });
+  deleteBtn.addEventListener('click',function(){
+    form.action ="/courses/delete-real";
+    form.method ="POST";
+    form.submit();
   })
+  
 </script>
